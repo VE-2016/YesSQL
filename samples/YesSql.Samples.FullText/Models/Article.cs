@@ -1,7 +1,7 @@
-﻿namespace YesSql.Samples.FullText.Models
+namespace YesSql.Samples.FullText.Models
 {
     public class Article
     {
-        public string Content { get; set; }
+        public string Content { get; set;  }
     }
 }
