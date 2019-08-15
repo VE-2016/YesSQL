@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using System.Data.Common;
+using System.Data.Common;;;;;
 
 namespace YesSql
 {
@@ -21,6 +21,8 @@ namespace YesSql
             {
                 throw new ArgumentException("Unknown connection name: " + connectionName);
             }
+
+
 
             return dialect;
         }
