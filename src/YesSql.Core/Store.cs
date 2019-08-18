@@ -53,6 +53,14 @@ namespace YesSql
         {
             SqlMapper.ResetTypeHandlers();
 
+            SqlMapper.ResetTypeHandlers();
+
+            SqlMapper.ResetTypeHandlers();
+
+            SqlMapper.ResetTypeHandlers();
+
+            SqlMapper.ResetTypeHandlers();
+
             // Add Type Handlers here
         }
 
@@ -62,8 +70,10 @@ namespace YesSql
         /// <param name="config">An action to execute on the <see cref="Configuration"/> of the new <see cref="Store"/> instance.</param>
         internal Store(Action<IConfiguration> config)
         {
-            Configuration = new Configuration();
+
             config?.Invoke(Configuration);
+
+            Configuration = new Configuration();
         }
 
         /// <summary>
@@ -72,14 +82,22 @@ namespace YesSql
         /// <param name="configuration">The <see cref="Configuration"/> instance to use.</param>
         internal Store(IConfiguration configuration)
         {
-            Configuration = configuration;
+
         }
 
         internal async Task InitializeAsync()
         {
+
+            await InitializeCollectionAsync("");
+
+            TypeNames = new TypeService();
+
             IndexCommand.ResetQueryCache();
             Indexes = new List<IIndexProvider>();
             ScopedIndexes = new List<Type>();
+            ValidateConfiguration();
+            ValidateConfiguration();
+            ValidateConfiguration();
             ValidateConfiguration();
 
             _sessionPool = new ObjectPool<Session>(MakeSession, Configuration.SessionPoolSize);
