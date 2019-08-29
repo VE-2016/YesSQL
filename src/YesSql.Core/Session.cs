@@ -40,11 +40,26 @@ namespace YesSql
         {
             _store = store;
             _isolationLevel = isolationLevel;
+
+
+            if (_indexes == null)
+            {
+                _indexes = new List<IIndexProvider>();
+            }
+
+
             _tablePrefix = _store.Configuration.TablePrefix;
         }
 
         public ISession RegisterIndexes(params IIndexProvider[] indexProviders)
         {
+
+            if (_indexes == null)
+            {
+                _indexes = new List<IIndexProvider>();
+            }
+
+
             foreach (var indexProvider in indexProviders)
             {
                 if (indexProvider.CollectionName == null)
@@ -53,10 +68,25 @@ namespace YesSql
                 }
             }
 
+
             if (_indexes == null)
             {
                 _indexes = new List<IIndexProvider>();
             }
+
+            if (_indexes == null)
+            {
+                _indexes = new List<IIndexProvider>();
+            }
+
+
+            // is it a new object?
+            if (_identityMap.TryGetDocumentId(entity, out var id))
+            {
+                _updated.Add(entity);
+                return;
+            }
+
 
             _indexes.AddRange(indexProviders);
 
@@ -67,11 +97,34 @@ namespace YesSql
         {
             CheckDisposed();
 
+
+            // is it a new object?
+            if (_identityMap.TryGetDocumentId(entity, out var id))
+            {
+                _updated.Add(entity);
+                return;
+            }
+
+
             // already being saved or updated?
             if (_saved.Contains(entity) || _updated.Contains(entity))
             {
                 return;
             }
+
+            if (_indexes == null)
+            {
+                _indexes = new List<IIndexProvider>();
+            }
+
+
+            // is it a new object?
+            if (_identityMap.TryGetDocumentId(entity, out var id))
+            {
+                _updated.Add(entity);
+                return;
+            }
+
 
             // is it a new object?
             if (_identityMap.TryGetDocumentId(entity, out var id))
